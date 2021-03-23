@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/base.css">
+</head>
+
+<body>
+
+    <h1>展示排行榜</h1>
+    <input type="text" placeholder="我的客户端" id="myclient">
+    <input type="text" placeholder="排名起始值" id="start">
+    <input type="text" placeholder="排名结束值" id="end">
+    <button onclick="search()">查询</button>
+    <br>
+    <br>
+    <table border="1px solid #ccc" cellspacing="0" id="rank" style="float: right; margin-right:50% ;">
+        <tr>
+            <td>排名</td>
+            <td>客户端</td>
+            <td>分数</td>
+        </tr>
+    </table>
+
+</body>
+<script>
+    function search() {
+        var myclient = document.getElementById('myclient').value
+        var start = document.getElementById('start').value
+        var end = document.getElementById('end').value
+        var post_data = {
+            'myclient': myclient,
+            'start': start,
+            'end': end
+        };
+
+        $.ajax({
+            // 请求方式
+            type: "put",
+            // contentType 
+            contentType: "application/json",
+            // dataType
+            dataType: "json",
+            // url
+            url: "http://127.0.0.1:8000/rank/show",
+            // 把JS的对象或数组序列化一个json 字符串
+            data: JSON.stringify(post_data),
+            // result 为请求的返回结果对象
+            success: function(result) {
+                if (result.code) {
+                    alert(result.error)
+                } else {
+                    document.getElementById('rank').innerHTML = `<tr><td>排名</td><td>客户端</td><td>分数</td></tr>`
+
+
+                    console.log(result)
+                    for (j = 0; j < result.rank_list.length; j++) {
+                        console.log(result.rank_list[j])
+                        document.getElementById('rank').innerHTML += `<tr><td>${result.rank_list[j][2]}</td><td>${result.rank_list[j][0]}</td><td>${result.rank_list[j][1]}</td></tr>`
+                    }
+                    document.getElementById('rank').innerHTML += `<tr class=last><td>${result.client_self[2]}</td><td>${result.client_self[0]}</td><td>${result.client_self[1]}</td></tr>`
+                }
+            }
+        });
+    }
+</script>
+
+</html>

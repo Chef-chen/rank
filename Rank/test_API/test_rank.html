@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <h3>排行榜</h3>
+    <table>
+        <tr>
+            <td>排名</td>
+            <td>客户端</td>
+            <td>分数</td>
+        </tr>
+        {% for i in item %}
+        <tr>
+            <td>{{start}}</td>
+            <td>{{i}}.client</td>
+            <td>{{i}}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+
+</body>
+
+</html>

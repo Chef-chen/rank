@@ -1,0 +1,12 @@
+table tr td {
+    text-align: center;
+    width: max-content;
+    height: 30px;
+    padding: 10px;
+    font-weight: 700;
+}
+
+.last {
+    background: blue;
+    color: pink;
+}
